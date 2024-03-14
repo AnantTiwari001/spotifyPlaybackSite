@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotify Stream</title>
+  </head>
+  <body>
+    <h1>Play Music 😊</h1>
+    <input type="text" id="keyInput" placeholder="Enter key here">
+    <button onclick="handleKey">okay</button>
+    <br/>
+    <button onclick="handlePlay()">play</button>
+    <button onclick="showAllDevices()">all Devices</button>
+    <button onclick="handleChangeDevice()">Change device</button>
+
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      let accessToken = prompt("Please enter access token:", "Default Value");
+      console.log('later!!')
+      console.log(accessToken)
+      const handleKey=()=>{
+        accessToken= document.getElementById('keyInput').value;
+        console.log(accessToken)
+      }
+      let deviceRn;
+      const showAllDevices = async () => {
+        console.log("all devices!!");
+        const response = await fetch(
+          "https://api.spotify.com/v1/me/player/devices",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Ensure you have the valid token
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        return data.devices;
+      };
+      const handleChangeDevice = async () => {
+        console.log(deviceRn);
+        const response = await fetch("https://api.spotify.com/v1/me/player", {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Ensure you have the valid token
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            device_ids: [deviceRn],
+            play: true, // This will start playback immediately
+          }),
+        });
+        console.log("change device: ", response);
+        // fetch(
+        //   `https://api.spotify.com/v1/me/player/play?device_id=${deviceRn}`,
+        //   {
+        //     method: "PUT",
+        //     body: JSON.stringify({
+        //       uris: ["spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"],
+        //     }),
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       Authorization: `Bearer ${accessToken}`,
+        //     },
+        //   }
+        // )
+        //   .then((response) => {
+        //     // Handle response
+        //   })
+        //   .catch((error) => {
+        //     // Handle error
+        //   });
+      };
+      let player0;
+      let stateNow;
+      const handlePlay = async () => {
+        console.log("Playing!", stateNow);
+        try {
+          console.log(await player0.togglePlay());
+        } catch (erro) {
+          console.log(erro);
+        }
+      };
+
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        const player = new window.Spotify.Player({
+          name: "Web Playback SDK",
+          getOAuthToken: (cb) => {
+            cb(accessToken);
+          },
+          volume: 0.5,
+        });
+
+        // setPlayer(player);
+        player0 = player;
+
+        player.addListener("ready", ({ device_id }) => {
+          deviceRn = device_id;
+          console.log("Ready with Device ID", device_id);
+        });
+
+        player.addListener("not_ready", ({ device_id }) => {
+          console.log("Device ID has gone offline", device_id);
+        });
+
+        player.addListener("player_state_changed", (state) => {
+          // presentState= state;
+
+          if (!state) {
+            return;
+          }
+          console.log(state);
+          //   setTrack(state.track_window.current_track);
+          //   setPaused(state.paused);
+
+          player.getCurrentState().then((state) => {
+            // !state ? setActive(false) : setActive(true);
+            console.log("state", state);
+            stateNow = state;
+          });
+        });
+
+        player0.connect();
+      };
+    </script>
+  </body>
+</html>
