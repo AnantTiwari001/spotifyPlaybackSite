@@ -7,10 +7,18 @@
   </head>
   <body>
     <h1>Play Music 😊</h1>
-    <input type="text" id="keyInput" placeholder="Enter key here" />
+    <div style="display: flex; justify-content: center;">
+      <img
+      src="https://forum-kobotoolbox-org.s3.dualstack.us-east-1.amazonaws.com/original/2X/5/5a7b168b37a53310c7be8c1bfc25f024cebedef5.png"
+      width="200"
+      style="margin-top: 15px; aspect-ratio: 1.8; "
+      />
+    </div>
+    <!-- <input type="text" id="keyInput" placeholder="Enter key here" />
     <br />
     <button onclick="handlePlay()">play</button>
     <button onclick="showAllDevices()">all Devices</button>
+    <button onclick="redirect()">redirect</button> -->
 
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script>
@@ -20,7 +28,7 @@
       // Get the value of the 'param' variable
       const accessToken = params.get("key");
 
-      console.log('key: ',accessToken); // Outputs: value
+      console.log("key: ", accessToken); // Outputs: value
       const showAllDevices = async () => {
         console.log("all devices!!");
         const response = await fetch(
@@ -73,7 +81,7 @@
 
         player.addListener("ready", ({ device_id }) => {
           console.log("Ready with Device ID", device_id);
-          handleChangeDevice(device_id)
+          handleChangeDevice(device_id);
         });
 
         player.addListener("not_ready", ({ device_id }) => {
@@ -81,7 +89,6 @@
         });
 
         player.addListener("player_state_changed", (state) => {
-
           if (!state) {
             return;
           }
@@ -96,6 +103,11 @@
 
         player0.connect();
       };
+
+      function redirect() {
+        console.log("redirecting");
+        window.location.href = "expo://";
+      }
     </script>
   </body>
 </html>
