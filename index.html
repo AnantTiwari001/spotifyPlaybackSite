@@ -95,7 +95,7 @@
       let player0;
       let stateNow;
       const handlePlay = async () => {
-        console.log("Playing!", stateNow);
+        console.log("Playing!");
         try {
           console.log(await player0.togglePlay());
         } catch (erro) {
@@ -118,11 +118,6 @@
           console.log("Ready with Device ID", device_id);
           handleChangeDevice(device_id);
           //redirect();
-          
-          setTimeout(() => {
-            //redirect();
-            handlePlay();
-          }, 1000);
         });
 
         player.addListener("not_ready", ({ device_id }) => {
@@ -144,6 +139,11 @@
 
         player0.connect();
       };
+
+      setTimeout(() => {
+            //redirect();
+            handlePlay();
+          }, 1000);
 
       function redirect() {
         console.log("redirecting");
