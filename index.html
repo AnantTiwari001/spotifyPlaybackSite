@@ -7,11 +7,46 @@
   </head>
   <body>
     <h1>Play Music 😊</h1>
-    <div style="display: flex; justify-content: center;">
+    <div style="position: absolute; top: 60px; right: 10px">
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          flex-direction: columns;
+          align-items: center;
+        "
+      >
+        <img
+          src="./logo.jpg"
+          alt="company's logo"
+          style="height: 50px; width: auto; border-radius: 20px"
+        />
+      </div>
+      <!-- <a href="intent://#Intent;scheme=muse;package=com.example.muse;end" -->
+      <a href="muse://#Intent;scheme=muse;package=com.example.muse;end"
+        style="
+          color: black;
+          display: block;
+          text-align: center;
+          font-family: cursive;
+          text-decoration: none;
+        "
+      >
+        Melos Music
+      </a>
+    </div>
+    <div
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -55%);
+      "
+    >
       <img
-      src="https://forum-kobotoolbox-org.s3.dualstack.us-east-1.amazonaws.com/original/2X/5/5a7b168b37a53310c7be8c1bfc25f024cebedef5.png"
-      width="200"
-      style="margin-top: 15px; aspect-ratio: 1.8; "
+        src="./disc.gif"
+        alt="disc icon"
+        style="max-width: 600px; width: 100vw; height: auto; margin: auto"
       />
     </div>
     <!-- <input type="text" id="keyInput" placeholder="Enter key here" />
@@ -82,6 +117,7 @@
         player.addListener("ready", ({ device_id }) => {
           console.log("Ready with Device ID", device_id);
           handleChangeDevice(device_id);
+          redirect();
         });
 
         player.addListener("not_ready", ({ device_id }) => {
@@ -106,7 +142,7 @@
 
       function redirect() {
         console.log("redirecting");
-        window.location.href = "expo://";
+        window.location.href = "muse://#Intent;scheme=muse;package=com.example.muse;end";
       }
     </script>
   </body>
