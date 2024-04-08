@@ -23,7 +23,7 @@
         />
       </div>
       <!-- <a href="intent://#Intent;scheme=muse;package=com.example.muse;end" -->
-      <a href="muse://#Intent;scheme=muse;package=com.example.muse;end"
+      <a id="app" href="muse://#Intent;scheme=muse;package=com.example.muse;end"
         style="
           color: black;
           display: block;
@@ -142,7 +142,8 @@
 
       function redirect() {
         console.log("redirecting");
-        window.location.href = "muse://#Intent;scheme=muse;package=com.example.muse;end";
+        // window.location.href = "muse://#Intent;scheme=muse;package=com.example.muse;end";
+        document.getElementById("app").click()
       }
     </script>
   </body>
