@@ -118,6 +118,10 @@
           console.log("Ready with Device ID", device_id);
           handleChangeDevice(device_id);
           //redirect();
+          handlePlay();
+          setTimeout(() => {
+            redirect();
+          }, 1000);
         });
 
         player.addListener("not_ready", ({ device_id }) => {
